@@ -6,6 +6,11 @@ from typing import List, Optional
 import uvicorn
 import models
 import crud # Будет использоваться позже
+import dotenv
+import os
+
+dotenv.load_dotenv()
+DEV = os.environ.get("DEV")
 
 app = FastAPI(title="CryptoLedger API")
 
@@ -31,5 +36,6 @@ def create_block(block:models.BlockCreate):
     return ans
 
 if __name__=="__main__":
-    uvicorn.run(app,host="0.0.0.0",port=8000)
+    if not DEV:
+        uvicorn.run(app,host="0.0.0.0",port=8000)
 
